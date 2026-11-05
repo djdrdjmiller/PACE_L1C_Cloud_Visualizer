@@ -41,12 +41,14 @@ def main():
         python=environment/('Scripts/python.exe' if os.name=='nt' else 'bin/python')
         subprocess.run([str(python),'-I','-m','pip','install','--no-deps',str(wheel)],check=True,cwd=base)
         code='''
-import json,time
+import json,time,sys
 from pathlib import Path
 import pace_l1c
 from fastapi.testclient import TestClient
 from pace_l1c.service import create_app
-assert Path(pace_l1c.__file__).is_relative_to(Path('environment').resolve())
+module_path=Path(pace_l1c.__file__).resolve()
+environment_path=Path(sys.prefix).resolve()
+assert module_path.is_relative_to(environment_path),(str(module_path),str(environment_path))
 app=create_app(cache=Path('cache'),output=Path('exports'))
 with TestClient(app) as client:
     page=client.get('/')
