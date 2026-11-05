@@ -26,3 +26,16 @@ coverage/
 
 # User-local search and scene records
 *.local.json
+
+# Scientific products stay in the user's cache, never in source control.
+*.nc
+*.nc4
+*.hdf
+*.h5
+*.hdf5
+
+# Independent statistics workspace and development-only handoffs/launcher.
+/granule-statistics/
+/docs/handoffs/GRANULE_STATISTICS.md
+/docs/handoffs/CRYOCLOUD_LIQUID_INDEX_CF_COT.md
+/scripts/launch-science-scene.command

@@ -45,7 +45,7 @@ Omit optional Mie/atmosphere arguments for the L1C core. The complete matched GP
 ## Next delivery tracks
 
 1. [Fixed-scene hosted demonstration](handoffs/FIXED_SCENE_WEB.md): the current 20251002T182635 scene, Rayleigh-only experimental correction, original sampling, linked diagnostics, optional private-service Mie access. Host deployment is not implemented or authorized by writing this brief.
-2. [Shareable locally deployed GitHub tool](handoffs/SHAREABLE_LOCAL.md): user-specified granule-ID discovery/acquisition, portable setup, remote private Mie provider, no transmission-table dependency. The user-created public target is `djdrdjmiller/PACE_L1C_Cloud_Visualizer`; no remote is configured in this checkout. Resolve code license, authorship/data rights and upload authorization before publication.
+2. [Shareable locally deployed GitHub tool](handoffs/SHAREABLE_LOCAL.md): implemented and published as v0.1.0 at `djdrdjmiller/PACE_L1C_Cloud_Visualizer`, with user-granule discovery/acquisition, wheel setup and no transmission-table dependency. Apache-2.0 was already chosen in the target repository; the user authorized source publication. Remote Mie/user keys are deferred; local authorized files remain optional.
 
 Shared [remote Mie guidance](REMOTE_MIE.md) defines the proposed provider contract and Drive/server options. Keep shared science semantics common across tracks. Each future agent should work in its own branch/worktree and report changes to interfaces; neither should overwrite the other's work or change cloudbow/RFT physics as a deployment shortcut.
 
