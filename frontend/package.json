@@ -1,0 +1,9 @@
+{
+  "name": "pace-l1c-analysis-desk",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {"build": "tsc --noEmit && vite build", "dev": "vite --host 127.0.0.1"},
+  "dependencies": {"plotly.js-dist-min": "3.3.1"},
+  "devDependencies": {"typescript": "5.9.3", "vite": "7.1.12", "@types/plotly.js": "3.0.8"}
+}

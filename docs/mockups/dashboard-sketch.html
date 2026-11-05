@@ -1,0 +1,160 @@
+<style>
+#pace-sketch { --paper:light-dark(#faf9f5,#202321); --panel:light-dark(#fffefa,#292e2b); --ink:light-dark(#253632,#e3eae4); --quiet:light-dark(#63726b,#abb8af); --line:light-dark(#b8c1b6,#59645d); --soft:light-dark(#eef0e8,#353e36); --ocean:light-dark(#c4dce0,#32575e); --land:light-dark(#d0d9b7,#536247); --cloud:light-dark(#f5f2e6,#bac8c3); --accent:light-dark(#356b61,#92c6ad); --warm:light-dark(#a87743,#dfb880); font:14px/1.45 system-ui,sans-serif; color:var(--ink); }
+#pace-sketch * {box-sizing:border-box}
+#pace-sketch .app {background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:18px}
+#pace-sketch h2 {font-size:20px;font-weight:500;margin:0}
+#pace-sketch h3 {font-size:14px;font-weight:500;margin:0}
+#pace-sketch p {margin:0}
+#pace-sketch .small {font-size:12px;color:var(--quiet)}
+#pace-sketch header {display:flex;justify-content:space-between;gap:16px;align-items:center;padding-right:90px;margin-bottom:16px}
+#pace-sketch .brand {display:flex;align-items:center;gap:10px}
+#pace-sketch .tag {border:1px dashed var(--line);padding:3px 8px;border-radius:4px;font-size:12px;white-space:nowrap}
+#pace-sketch .work {display:grid;grid-template-columns:190px minmax(0,1fr);gap:16px}
+#pace-sketch aside {display:flex;flex-direction:column;gap:16px;border-right:1px solid var(--line);padding-right:16px}
+#pace-sketch label {display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--quiet)}
+#pace-sketch select,#pace-sketch input[type=number] {width:100%;min-width:0;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:7px;font:inherit;font-size:13px}
+#pace-sketch button {background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:7px 10px;font:inherit;font-size:12px}
+#pace-sketch button.primary {background:var(--ink);color:var(--paper)}
+#pace-sketch .section {display:grid;gap:9px}
+#pace-sketch .section-title {font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--quiet)}
+#pace-sketch .channels {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+#pace-sketch .channels select {padding:5px 2px;font-size:12px}
+#pace-sketch .toolbar {display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:10px}
+#pace-sketch .controls-inline {display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#pace-sketch .controls-inline select {width:auto;max-width:100%}
+#pace-sketch .maps {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+#pace-sketch .map-panel {background:var(--panel);border:1px solid var(--line);border-radius:5px;overflow:hidden;min-width:0}
+#pace-sketch .panel-head {padding:9px 10px;min-height:60px;border-bottom:1px solid var(--line)}
+#pace-sketch .map {width:100%;height:200px;display:block;background:var(--ocean);touch-action:manipulation}
+#pace-sketch .map .grid {stroke:var(--ink);opacity:.12;stroke-width:1;fill:none}
+#pace-sketch .map .land {fill:var(--land);stroke:var(--quiet);stroke-width:1.2}
+#pace-sketch .map .cloud {fill:var(--cloud);opacity:.85}
+#pace-sketch .map .marker {stroke:var(--ink);fill:var(--paper);stroke-width:2}
+#pace-sketch .map .cross {stroke:var(--ink);stroke-width:1.5}
+#pace-sketch .map-note {display:flex;justify-content:space-between;gap:4px;padding:6px 9px;font-size:11px;color:var(--quiet)}
+#pace-sketch .selection {margin:12px 0;background:var(--soft);padding:9px 11px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-radius:4px}
+#pace-sketch .selection strong {font-weight:500}
+#pace-sketch .diagnostics {display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#pace-sketch .chart-panel {min-width:0;background:var(--panel);border:1px solid var(--line);padding:11px;border-radius:5px}
+#pace-sketch .chart {display:block;width:100%;height:172px;overflow:visible}
+#pace-sketch .chart text {fill:var(--quiet);font-size:11px;font-family:system-ui,sans-serif}
+#pace-sketch .chart .axis {stroke:var(--line);fill:none}
+#pace-sketch .chart .curve {fill:none;stroke:var(--accent);stroke-width:2}
+#pace-sketch .chart .other {fill:none;stroke:var(--warm);stroke-width:1.5;stroke-dasharray:4 3}
+#pace-sketch .chart .dot {fill:var(--accent)}
+#pace-sketch .legend {font-size:11px;color:var(--quiet);margin-top:4px}
+#pace-sketch .export {margin-top:14px;border-top:1px solid var(--line);padding-top:12px;display:flex;align-items:end;gap:10px;flex-wrap:wrap}
+#pace-sketch .export label {flex:1;min-width:90px}
+#pace-sketch .export button {align-self:end}
+#pace-sketch .later {margin-top:12px;display:flex;gap:6px;flex-wrap:wrap}
+#pace-sketch .later span {font-size:11px;color:var(--quiet);border:1px dashed var(--line);padding:3px 6px;border-radius:4px}
+#pace-sketch .preview {margin-top:12px;padding:12px;background:var(--panel);border:1px solid var(--line);border-radius:4px}
+#pace-sketch .preview[hidden] {display:none}
+#pace-sketch .miniature {display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+#pace-sketch .miniature svg {width:100%;height:90px}
+#pace-sketch .studio .work {grid-template-columns:1fr}
+#pace-sketch .studio aside {border-right:0;border-bottom:1px solid var(--line);padding:0 0 12px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+#pace-sketch .studio .map {height:240px}
+#pace-sketch .studio .maps {gap:14px}
+@media(max-width:800px){#pace-sketch .work{grid-template-columns:1fr}#pace-sketch aside{border-right:0;border-bottom:1px solid var(--line);padding:0 0 12px;display:grid;grid-template-columns:1fr 1fr}#pace-sketch .studio aside{grid-template-columns:1fr 1fr}}
+@media(max-width:570px){#pace-sketch .maps,#pace-sketch .diagnostics{grid-template-columns:1fr}#pace-sketch .map,#pace-sketch .studio .map{height:220px}#pace-sketch .app{padding:12px}#pace-sketch header{padding-right:0;align-items:start;flex-direction:column}#pace-sketch .studio aside{grid-template-columns:1fr 1fr}#pace-sketch .miniature{grid-template-columns:1fr}#pace-sketch select,#pace-sketch input[type=number]{font-size:16px}}
+</style>
+<div id="pace-sketch">
+ <div class="viz-carousel" aria-label="PACE dashboard layout sketches">
+  <section data-variant="Analysis desk" aria-label="Analysis desk layout"><div class="mount"></div></section>
+  <section data-variant="Figure studio" aria-label="Figure studio layout" hidden><div class="mount"></div></section>
+ </div>
+ <template id="pace-layout-template">
+  <div class="app">
+   <header><div class="brand"><i data-lucide="orbit" aria-hidden="true"></i><div><h2>PACE · Scene explorer</h2><p class="small">Linked imagery · spectra · polarimetry</p></div></div><span class="tag">Sketch · synthetic data</span></header>
+   <div class="work">
+    <aside>
+     <div class="section"><div class="section-title">Scene pair</div><label>Cached scene<select data-field="scene"><option>Science scene · 02 Oct 2025</option><option>Multi-angle coverage</option><option>OCI tilt transition</option><option>Dateline crossing</option><option>High latitude</option></select></label><p class="small">OCI L1C + HARP2 L1C<br>Original 5.2 km bins</p><button type="button" data-action="files" class="cursor-interaction">Local file pair…</button></div>
+     <div class="section"><div class="section-title">OCI imagery</div><label>Composite<select data-field="oci"><option>True color</option><option>False color · NIR</option></select></label><div class="channels"><label>R<select data-field="r"><option>645</option><option>865</option><option>1615</option></select></label><label>G<select data-field="g"><option>555</option><option>645</option></select></label><label>B<select data-field="b"><option>443</option><option>555</option></select></label></div></div>
+     <div class="section"><div class="section-title">Shared HARP2 controls</div><label>View preset<select data-field="view"><option value="near">Near nadir · sparse-band match</option><option value="fore">Forward · sparse-band match</option><option value="aft">Aft · sparse-band match</option></select></label><p class="small" data-angle-label>Actual channel angles shown here<br>Illustrative sector match</p><label>Polarimetric image<select data-field="pol"><option value="magnitude">Polarized magnitude RGB</option><option value="dolp">DoLP RGB</option><option value="signed">Signed −Q′ · red band</option></select></label></div>
+     <div class="section"><div class="section-title">Appearance</div><label>Stretch<select data-field="stretch"><option>Fixed comparison</option><option>Beauty preset</option></select></label><label>Brightness<input data-field="brightness" type="range" min="60" max="140" value="100" aria-label="Image brightness"></label><p class="small">Transmission correction: off<br>Polarimetry: uncorrected</p></div>
+    </aside>
+    <main>
+     <div class="toolbar"><div class="controls-inline"><label>Projection<select data-field="projection"><option>Native SOCEA</option><option>Plate Carrée</option><option>Regional equal area</option></select></label></div><div class="controls-inline"><button data-action="crop" type="button" class="cursor-interaction">Crop region</button><button data-action="next" type="button" class="cursor-interaction">Select next bin</button></div></div>
+     <div class="maps">
+      <section class="map-panel"><div class="panel-head"><h3>OCI · total reflectance</h3><p class="small" data-oci-label>RGB 645 / 555 / 443 nm · TOA</p></div><svg class="map cursor-interaction" data-map="oci" viewBox="0 0 300 240" preserveAspectRatio="none" role="img" aria-label="Schematic OCI image; click to select a shared bin"></svg><div class="map-note"><span>Schematic imagery</span><span data-projection-label>Native grid</span></div></section>
+      <section class="map-panel"><div class="panel-head"><h3>HARP2 · total reflectance</h3><p class="small">RGB · nearest sectors · TOA</p></div><svg class="map cursor-interaction" data-map="harp" viewBox="0 0 300 240" preserveAspectRatio="none" role="img" aria-label="Schematic HARP2 total image; click to select a shared bin"></svg><div class="map-note"><span>Schematic imagery</span><span>View-dependent coverage</span></div></section>
+      <section class="map-panel"><div class="panel-head"><h3 data-pol-title>HARP2 · polarized magnitude</h3><p class="small" data-pol-label>Same sectors · uncorrected TOA</p></div><svg class="map cursor-interaction" data-map="pol" viewBox="0 0 300 240" preserveAspectRatio="none" role="img" aria-label="Schematic HARP2 polarimetric image; click to select a shared bin"></svg><div class="map-note"><span>Schematic imagery</span><span data-pol-scale>Independent stretch</span></div></section>
+     </div>
+     <div class="selection" aria-live="polite"><div><strong data-bin-label>Selected bin · row 184, column 226</strong><p class="small">One selection across all maps and diagnostics</p></div><p class="small">Original L1C bin<br><span data-selection-source>Illustrative selection</span></p></div>
+     <div class="diagnostics">
+      <section class="chart-panel"><div class="toolbar"><h3>OCI spectrum</h3><select data-field="spectrum" aria-label="Spectrum quantity"><option>TOA reflectance</option><option>TOA radiance</option></select></div><svg class="chart" data-chart="spectrum" role="img" aria-label="Synthetic selected-bin OCI spectrum"></svg><p class="legend">Full available L1C spectrum · illustrative values</p></section>
+      <section class="chart-panel"><div class="toolbar"><h3>HARP2 angular signature</h3><select data-field="branch" aria-label="Angular branch"><option>Both branches</option><option>Branch 1</option><option>Branch 2</option></select></div><svg class="chart" data-chart="polar" role="img" aria-label="Synthetic signed polarized reflectance versus scattering angle"></svg><p class="legend">Solid: branch 1 · dashed: branch 2 · signed −Q′</p></section>
+     </div>
+     <div class="later"><span>Later: stored GPC fit</span><span>Advanced: RFT mixture fit</span><span>Later: total-reflectance transmission correction</span></div>
+     <div class="export"><label>Figure layout<select data-field="layout"><option>Three maps + diagnostics</option><option>Three maps only</option><option>Selected map</option></select></label><label>Preset<select data-field="preset"><option>Paper · 180 mm</option><option>Presentation · 16:9</option></select></label><label>DPI<input data-field="dpi" type="number" value="300" min="72" max="1200" step="50"></label><button class="primary cursor-interaction" type="button" data-action="preview">Preview figure</button></div>
+     <div class="preview" hidden><h3>Figure composition preview</h3><p class="small" data-preview-label></p><div class="miniature"></div><p class="small">Planned export: PNG / PDF + reproducible recipe</p></div>
+     <p class="small" data-status style="margin-top:10px" aria-live="polite">Click any schematic map to move the shared selection.</p>
+    </main>
+   </div>
+  </div>
+ </template>
+</div>
+<script>
+(() => {
+ const root=document.getElementById('pace-sketch');
+ const template=root.querySelector('template');
+ const ns='http://www.w3.org/2000/svg';
+ const saved=window.openai?.widgetState?.privateContent || {};
+ function elem(tag,attrs,parent){const e=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);parent.appendChild(e);return e;}
+ root.querySelectorAll('[data-variant]').forEach((variant,index)=>{
+  const mount=variant.querySelector('.mount');mount.appendChild(template.content.cloneNode(true));
+  const app=mount.querySelector('.app');if(index===1)app.classList.add('studio');
+  let point={x:136,y:134};let state={...saved[index]};if(state.point)point=state.point;
+  const field=name=>app.querySelector('[data-field="'+name+'"]');
+  const status=txt=>app.querySelector('[data-status]').textContent=txt;
+  Object.keys(state).forEach(k=>{if(field(k))field(k).value=state[k];});
+  const maps=[...app.querySelectorAll('[data-map]')];
+  maps.forEach((svg,i)=>{
+   elem('path',{d:'M0 60H300M0 120H300M0 180H300M60 0V240M120 0V240M180 0V240M240 0V240',class:'grid'},svg);
+   elem('path',{d:'M218 0L204 32L224 56L194 88L209 123L186 155L206 195L188 240H300V0Z',class:'land'},svg);
+   for(let j=0;j<10;j++)elem('ellipse',{cx:42+j*16,cy:35+j*16+(i===1?7:0),rx:25+(j%3)*5,ry:9+(j%4)*3,class:'cloud'},svg);
+   elem('rect',{x:10,y:12,width:270,height:214,fill:'none',stroke:'var(--quiet)','stroke-dasharray':'5 5',opacity:'.35','data-crop':''},svg);
+   const g=elem('g',{'data-marker':''},svg);elem('circle',{r:7,class:'marker'},g);elem('path',{d:'M-13 0H13M0 -13V13',class:'cross'},g);
+   svg.addEventListener('click',ev=>{const b=svg.getBoundingClientRect();point={x:Math.max(15,Math.min(285,(ev.clientX-b.left)*300/b.width)),y:Math.max(15,Math.min(225,(ev.clientY-b.top)*240/b.height))};app.querySelector('[data-selection-source]').textContent=['OCI map','HARP2 total map','HARP2 polarimetric map'][i];render();persist();});
+  });
+  function chart(svg,polar){
+   svg.replaceChildren();const w=Math.max(250,svg.clientWidth||330),h=172;svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
+   const l=43,r=w-12,t=16,b=135;
+   elem('path',{d:`M${l} ${t}V${b}H${r}`,class:'axis'},svg);
+   const ticks=polar?['120','140','160','180']:['400','800','1200','2200'];
+   ticks.forEach((v,i)=>{const x=l+(r-l)*i/3;elem('text',{x,y:b+16,'text-anchor':i===3?'end':i===0?'start':'middle'},svg).textContent=v;});
+   [0,1,2].forEach(i=>{const y=b-(b-t)*i/2;elem('text',{x:l-6,y:y+4,'text-anchor':'end'},svg).textContent=polar?['−0.02','0.04','0.10'][i]:field('spectrum').value==='TOA radiance'?['0','100','200'][i]:['0','0.5','1.0'][i];});
+   elem('text',{x:(l+r)/2,y:170,'text-anchor':'middle'},svg).textContent=polar?'Scattering angle (°)':'Wavelength (nm)';
+   const paths=polar?2:1;
+   for(let k=0;k<paths;k++){
+    if(polar&&((field('branch').value==='Branch 1'&&k===1)||(field('branch').value==='Branch 2'&&k===0)))continue;
+    const coords=[];
+    for(let j=0;j<=80;j++){const z=j/80;let v=polar?.13+.57*Math.exp(-Math.pow((z-.42)/.08,2))+.13*Math.sin(z*42+k)*Math.exp(-Math.pow((z-.57)/.2,2))+.035*k:.17+.58*Math.exp(-Math.pow((z-.2)/.15,2))+.07*Math.sin(z*58)-.12*Math.exp(-Math.pow((z-.5)/.025,2));v+=(point.y-120)/700;coords.push([l+z*(r-l),b-v*(b-t)]);}
+    elem('path',{d:coords.map((p,j)=>(j?'L':'M')+p.join(',')).join(' '),class:k?'other':'curve'},svg);
+    if(polar)coords.filter((_,j)=>j%5===0).forEach(p=>elem('circle',{cx:p[0],cy:p[1],r:2.3,class:'dot',opacity:k?.5:1},svg));
+   }
+  }
+  function render(){
+   maps.forEach(svg=>{svg.querySelector('[data-marker]').setAttribute('transform',`translate(${point.x},${point.y})`);svg.style.filter=`brightness(${field('brightness').value}%)`;});
+   const mode=field('pol').value;app.querySelector('[data-pol-title]').textContent='HARP2 · '+({magnitude:'polarized magnitude',dolp:'DoLP',signed:'signed −Q′'}[mode]);
+   app.querySelector('[data-pol-label]').textContent=mode==='signed'?'Red band · uncorrected TOA':'Same sectors · uncorrected TOA';
+   app.querySelector('[data-pol-scale]').textContent=mode==='dolp'?'Display range 0–1':mode==='signed'?'Zero-centered scale':'Independent stretch';
+   maps[2].style.background=mode==='signed'?'var(--soft)':mode==='dolp'?'var(--land)':'var(--ocean)';maps[2].querySelectorAll('.cloud').forEach((e,j)=>{e.style.fill=mode==='signed'?(j%2?'var(--accent)':'var(--warm)'):mode==='dolp'?'var(--accent)':'var(--warm)';e.style.opacity=mode==='dolp'?'.5':'.7';});
+   app.querySelector('[data-bin-label]').textContent=`Selected bin · row ${Math.round(point.y*1.37)}, column ${Math.round(point.x*1.66)}`;
+   app.querySelector('[data-angle-label]').textContent=({near:'Near nadir · approximate RGB match',fore:'Forward · approximate RGB match',aft:'Aft · approximate RGB match'})[field('view').value];
+   app.querySelector('[data-oci-label]').textContent=`RGB ${field('r').value} / ${field('g').value} / ${field('b').value} nm · TOA`;
+   app.querySelectorAll('[data-projection-label]').forEach(e=>e.textContent=field('projection').value);
+   chart(app.querySelector('[data-chart="spectrum"]'),false);chart(app.querySelector('[data-chart="polar"]'),true);
+  }
+  function persist(){const privateContent={...(window.openai?.widgetState?.privateContent||{})};privateContent[index]={point};app.querySelectorAll('[data-field]').forEach(e=>privateContent[index][e.dataset.field]=e.value);window.openai?.setWidgetState?.({modelContent:{mockup:'PACE dashboard',layout:variant.dataset.variant,polarimetricMode:field('pol').value},privateContent})?.catch(()=>{});}
+  app.querySelectorAll('[data-field]').forEach(e=>e.addEventListener('input',()=>{if(e.dataset.field==='oci')field('r').value=e.value.startsWith('False')?'865':'645';render();persist();}));
+  app.querySelector('[data-action="next"]').addEventListener('click',()=>{point={x:point.x>240?65:point.x+35,y:point.y>190?80:point.y+12};render();persist();});
+  app.querySelector('[data-action="crop"]').addEventListener('click',()=>{const cropped=app.dataset.cropped!=='true';app.dataset.cropped=String(cropped);maps.forEach(svg=>{const e=svg.querySelector('[data-crop]');e.setAttribute('x',cropped?55:10);e.setAttribute('y',cropped?55:12);e.setAttribute('width',cropped?160:270);e.setAttribute('height',cropped?140:214);});status(cropped?'Illustrative crop shared across the three maps.':'Full schematic scene selected.');});
+  app.querySelector('[data-action="files"]').addEventListener('click',()=>status('Sketch only · the implemented tool will validate your OCI/HARP2 local file pair.'));
+  app.querySelector('[data-action="preview"]').addEventListener('click',()=>{const p=app.querySelector('.preview');p.hidden=!p.hidden;app.querySelector('[data-preview-label]').textContent=`${field('layout').value} · ${field('preset').value} · ${field('dpi').value} DPI · settings and provenance included`;const mini=app.querySelector('.miniature');mini.replaceChildren();maps.forEach(svg=>{const c=svg.cloneNode(true);c.removeAttribute('data-map');mini.appendChild(c);});});
+  render();new ResizeObserver(()=>render()).observe(app.querySelector('.diagnostics'));
+  if(globalThis.Tweak){const design={rounded:true};const tweak=new Tweak({container:app,onChange:()=>app.style.borderRadius=design.rounded?'9px':'0'});tweak.addToggle(design,'rounded',{label:'Soft window corners'});}
+ });
+})();
+</script>

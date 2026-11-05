@@ -1,0 +1,6 @@
+PACE L1C Cloud Visualizer
+Copyright 2026 Daniel J. Miller
+
+This project includes owner-supplied µCloud branding and a browser bundle using
+Plotly.js. See THIRD_PARTY.md and licenses/plotly-LICENSE.txt.
+NASA source products and private scientific libraries are not redistributed.

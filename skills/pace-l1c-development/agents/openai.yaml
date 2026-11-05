@@ -1,0 +1,4 @@
+interface:
+  display_name: "PACE L1C Development"
+  short_description: "Build scientifically consistent PACE visualization"
+  default_prompt: "Use $pace-l1c-development to continue the assigned task using this repository's current dashboard handoff and scientific conventions."

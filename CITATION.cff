@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "Please cite this software and the original NASA products used in your analysis."
+title: "PACE L1C Cloud Visualizer"
+type: software
+version: 0.1.0
+date-released: '2026-11-05'
+license: Apache-2.0
+repository-code: 'https://github.com/djdrdjmiller/PACE_L1C_Cloud_Visualizer'
+authors:
+  - family-names: Miller
+    given-names: Daniel J.
+abstract: "Local analysis of original PACE OCI and HARP2 L1C bins with reproducible figures. Includes local scene discovery and reproducible original-bin figures."
+references:
+  - type: report
+    title: "The PACE Level 1C Data Format"
+    url: "https://oceancolor.gsfc.nasa.gov/files/NASA_TM2024219027v12_Level_1C_Format.pdf"
+  - type: dataset
+    title: "PACE OCI L1C Science V3"
+    doi: "10.5067/PACE/OCI/L1C/SCI/3"
+  - type: dataset
+    title: "PACE HARP2 L1C Science V4"
+    doi: "10.5067/PACE/HARP2/L1C/SCI/4"

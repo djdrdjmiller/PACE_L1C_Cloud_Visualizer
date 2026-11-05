@@ -1,0 +1,11 @@
+include README.md LICENSE NOTICE THIRD_PARTY.md requirements-lock.txt setup.py
+recursive-include licenses *.txt
+recursive-include frontend/src *.ts *.css
+recursive-include frontend/public *.svg *.png *.ico
+include frontend/index.html frontend/package.json frontend/pnpm-lock.yaml frontend/pnpm-workspace.yaml frontend/tsconfig.json
+prune data
+prune outputs
+prune cache
+prune granule-statistics
+prune frontend/node_modules
+prune frontend/dist

@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pace-l1c-vis"
+version = "0.1.0"
+description = "Native-bin PACE OCI and HARP2 analysis desk"
+requires-python = ">=3.14,<3.15"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE", "THIRD_PARTY.md", "licenses/*.txt"]
+readme = "README.md"
+dependencies = ["numpy>=2.1,<3", "xarray>=2025.1,<2027", "h5netcdf>=1.4,<2", "h5py>=3.12,<4", "matplotlib>=3.9,<4", "pyproj>=3.7,<4", "fastapi>=0.115,<1", "uvicorn>=0.34,<1", "earthaccess>=0.14,<1", "PyYAML>=6,<7", "pillow>=11,<13", "pyshp>=2.3,<4", "scipy>=1.15,<2"]
+
+[project.optional-dependencies]
+atmosphere = ["pyhdf==0.11.7"]
+test = ["pytest>=8,<10", "httpx>=0.28,<1", "pypdf>=5,<7"]
+
+[project.urls]
+Repository = "https://github.com/djdrdjmiller/PACE_L1C_Cloud_Visualizer"
+Issues = "https://github.com/djdrdjmiller/PACE_L1C_Cloud_Visualizer/issues"
+
+[project.scripts]
+pace-l1c = "pace_l1c.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

@@ -1,0 +1,28 @@
+# Local science data, references, credentials, and derived products
+/data/
+/outputs/
+/cache/
+/config/*.local.*
+.env
+.env.*
+!.env.example
+.netrc
+.aws/
+.DS_Store
+
+# Python and frontend artifacts
+.venv/
+.venv-*/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+node_modules/
+.pnpm-store/
+coverage/
+
+# User-local search and scene records
+*.local.json

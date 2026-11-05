@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "projection": "plate_carree",
+  "selected": [197, 280],
+  "crop": [0, 395, 124, 438],
+  "oci_targets": [645, 555, 443],
+  "harp_targets": [670, 550, 440],
+  "anchor_angle": 6.6,
+  "third_quantity": "polarized",
+  "diagnostic_quantity": "signed_q",
+  "diagnostic_branch": "1",
+  "cloudbow_overlay": true,
+  "title": "PACE · 2 October 2025 · uncorrected TOA"
+}

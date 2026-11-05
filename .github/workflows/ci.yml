@@ -1,0 +1,72 @@
+name: Test, package and release
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+          cache: pip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '11.25.0'
+      - run: python -m pip install -r requirements-lock.txt
+      - run: pnpm install --frozen-lockfile
+        working-directory: frontend
+      - run: pnpm run build
+        working-directory: frontend
+      - run: python -m pip install --no-deps -e .
+      - run: python -m pytest -q
+        env:
+          MPLCONFIGDIR: ${{ runner.temp }}/pace-matplotlib
+      - run: python -m pip wheel --no-deps . --wheel-dir dist
+      - run: python scripts/check_wheel.py dist --smoke
+        env:
+          MPLCONFIGDIR: ${{ runner.temp }}/pace-matplotlib
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheel-${{ matrix.os }}
+          path: dist/*.whl
+          if-no-files-found: error
+  release:
+    needs: check
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: wheel-ubuntu-latest
+          path: release
+      - name: Publish a new version after all platform checks pass
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          tag="v${version}"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release $tag already exists; immutable assets retained."
+            exit 0
+          fi
+          sha256sum release/*.whl requirements-lock.txt > release/SHA256SUMS
+          gh release create "$tag" release/*.whl release/SHA256SUMS requirements-lock.txt \
+            --target "$GITHUB_SHA" --title "PACE L1C Cloud Visualizer $tag" \
+            --notes-file .github/release-notes.md

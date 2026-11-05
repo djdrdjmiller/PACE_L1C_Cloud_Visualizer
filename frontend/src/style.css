@@ -1,0 +1,93 @@
+:root{font:14px/1.5 system-ui,sans-serif;color:#253632;background:#faf9f5;font-synthesis:none}*{box-sizing:border-box}body{margin:0}header{display:flex;justify-content:space-between;align-items:center;padding:22px 28px;border-bottom:1px solid #bdc8bf}h1{margin:0;font-size:23px;font-weight:550}h2{font-size:14px;font-weight:550;margin:0}small,.quiet{color:#60776c}main{display:grid;grid-template-columns:180px minmax(0,1fr);gap:16px;padding:18px}aside{display:flex;flex-direction:column;gap:18px;border-right:1px solid #bdc8bf;padding-right:14px}section{min-width:0}label{display:grid;gap:4px;font-size:12px;margin:7px 0}select,input,button{font:inherit;padding:7px;border:1px solid #bdc8bf;border-radius:4px;background:#fffefa;color:inherit;width:100%}button{cursor:pointer;background:#356b61;color:white}button:disabled{opacity:.5;cursor:wait}.maps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.panel{background:#fffefa;border:1px solid #bdc8bf;border-radius:6px;padding:12px;min-width:0}.map{position:relative;line-height:0;margin:12px 0;background:#e8efec;cursor:crosshair}.map img{width:100%;height:auto}.marker{position:absolute;transform:translate(-50%,-50%);font-size:28px;line-height:1;color:white;text-shadow:0 0 2px black;pointer-events:none}.selection{padding:12px;margin:16px 0;background:#eef0e8;border-radius:5px}.diagnostics{display:grid;grid-template-columns:1fr 1.4fr;gap:12px}.chart{height:310px}.exports{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;align-items:end}.exports label{width:110px}.exports button{width:auto}.channels{font-size:11px;min-height:54px}.warning{color:#98642d}#status{max-width:600px;font-size:12px}.error{color:#a23826}details{margin:6px 0}summary{cursor:pointer;font-size:12px}pre{white-space:pre-wrap;max-height:240px;overflow:auto;font-size:11px}a{color:#356b61}.pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}.export-links{display:flex;gap:14px}.badge{padding:3px 8px;background:#e7eee8;border-radius:4px;font-size:11px}@media(max-width:1000px){main{grid-template-columns:150px minmax(0,1fr);gap:10px;padding:12px}.maps{gap:6px}.panel{padding:7px}.channels{font-size:10px}.map{margin:8px 0}header{padding:14px}aside{padding-right:8px}h2{font-size:12px}}@media(max-width:540px){main{display:block;padding:14px}aside{border:0;padding:0;margin-bottom:18px;display:grid;grid-template-columns:1fr 1fr}header{padding:14px;display:block}.exports{gap:8px}h1{font-size:20px}}
+
+@media(max-width:540px){.maps{grid-template-columns:1fr}.map{max-width:640px}}
+
+@media(max-width:700px){.diagnostics{grid-template-columns:1fr}}
+
+label.check{display:flex;align-items:center;gap:6px;font-size:11px}label.check input{width:auto}
+
+#cloudbow-note{display:block;min-height:38px;font-size:11px;line-height:1.5}#polar-chart{margin-bottom:8px}
+
+.harp-slider{grid-column:2 / 4;padding:4px 10px 8px;background:#eef0e8;border:1px solid #bdc8bf;border-radius:5px}.slider-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.slider-head label{font-size:12px}.slider-head output{font-size:12px;font-variant-numeric:tabular-nums}input[type=range]{padding:0;border:0;background:transparent;accent-color:#356b61;cursor:pointer}input[type=range]:disabled{opacity:.4;cursor:not-allowed}.slider-ends{display:flex;justify-content:space-between;gap:8px;font-size:10px;color:#60776c}#anchor-state{text-align:center}@media(max-width:540px){.harp-slider{grid-column:1}}
+
+.first-control{margin-top:0}.first-control select{margin-bottom:6px}.oci-channels{grid-column:1;padding:4px 10px 8px;background:#eef0e8;border:1px solid #bdc8bf;border-radius:5px;display:flex;align-items:center;gap:7px}.oci-channels label{flex:1;min-width:0;margin:0}.oci-channels button{width:auto;padding:6px 10px;font-size:11px}.oci-channels input{padding:5px;font-size:12px}.diagnostic-panel{display:grid;grid-template-rows:90px 310px auto;align-content:start}.diagnostic-header h2{margin-bottom:8px;min-height:21px}.spectrum-control{width:150px;margin:0}.polar-controls{display:grid;grid-template-columns:minmax(76px,1.15fr) minmax(67px,1fr) minmax(50px,.72fr) minmax(76px,.95fr);gap:6px;align-items:end}.polar-controls label{margin:0;font-size:10px;min-width:0}.polar-controls select{font-size:11px;padding:6px 4px}.polar-controls .check{min-height:31px;align-self:end;font-size:10px}.diagnostic-footer{font-size:11px;line-height:1.5}.preset-note{font-size:11px;color:#60776c}.diagnostic-panel #polar-chart{margin:0}#cloudbow-note{min-height:38px}.diagnostics{grid-template-columns:1fr 1.4fr}@media(max-width:700px){.diagnostics{grid-template-columns:1fr}}@media(max-width:540px){.oci-channels{grid-column:1}.polar-controls{gap:4px}}@media(max-width:360px){.polar-controls{grid-template-columns:1fr 1fr}.diagnostic-panel{grid-template-rows:130px 310px auto}}
+
+.phase-legend{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:10px;margin-top:6px}.phase-legend[hidden]{display:none}.phase-legend span:before{content:'';display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--phase);margin-right:4px}
+
+.polar-controls{grid-template-columns:minmax(68px,1fr) minmax(60px,.9fr) minmax(45px,.65fr) minmax(60px,.8fr) minmax(80px,1fr)}.cloud-properties{margin-top:14px}.cloud-properties h3{font-size:12px;font-weight:550;margin:10px 0 6px}#cloud-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}#cloud-fields dl{display:grid;grid-template-columns:1fr auto;gap:4px 12px;font-size:11px;margin:0}#cloud-fields dd{margin:0;font-variant-numeric:tabular-nums}#cloud-quality p{font-size:11px;margin:6px 0}#rft-support{margin:6px 0;font-size:11px}#residual-chart{height:225px}#residual-chart[hidden]{display:none}@media(max-width:700px){#cloud-fields{grid-template-columns:1fr}.polar-controls{gap:4px}}
+
+.polar-controls{grid-template-columns:minmax(68px,1fr) minmax(60px,.85fr) minmax(45px,.6fr) minmax(220px,2.7fr);align-items:end}.overlay-controls{border:0;margin:0;padding:0;min-width:0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.overlay-controls legend{font-size:10px;color:#60776c;padding:0;margin-bottom:4px}.overlay-controls .check{min-height:29px;white-space:nowrap}#rft-component-key{font-size:11px}@media(max-width:1050px){.polar-controls{grid-template-columns:1fr 1fr .7fr}.overlay-controls{grid-column:1 / -1}.diagnostic-panel{grid-template-rows:120px 310px auto}}@media(max-width:360px){.diagnostic-panel{grid-template-rows:145px 310px auto}}
+
+.polar-controls{grid-template-columns:1fr 1fr .7fr;align-items:start}.overlay-controls{grid-column:1 / -1}.diagnostic-panel{grid-template-rows:145px 310px auto}@media(max-width:700px){.diagnostic-panel{grid-template-rows:165px 310px auto}}
+
+/* Insets match Plotly's fixed diagnostic margins (left 56, right 18,
+   top 14; residual top 28). Anchor the container, not only the toolbar,
+   so groups wrap within the axes even in stacked/narrow panels. */
+:is(#spectrum-chart,#polar-chart,#residual-chart) .modebar-container{
+  left:62px!important;right:24px!important;top:20px!important;width:auto!important;
+}
+#residual-chart .modebar-container{top:34px!important}
+:is(#spectrum-chart,#polar-chart,#residual-chart) .modebar{
+  top:0;right:0;max-width:100%;display:flex;flex-wrap:wrap;
+  justify-content:flex-end;white-space:normal;
+}
+:is(#spectrum-chart,#polar-chart,#residual-chart) .modebar-group{flex-shrink:0}
+/* App form buttons are width:100%; Plotly toolbar buttons must stay intrinsic. */
+:is(#spectrum-chart,#polar-chart,#residual-chart) .modebar-btn{
+  width:24px;min-width:24px;max-width:24px;
+}
+
+/* Two polarimetric workspaces first; OCI spectrum below both. */
+.diagnostics{grid-template-columns:repeat(2,minmax(0,1fr))}
+.spectrum-panel{grid-column:1 / -1;grid-template-rows:100px 310px auto;margin-top:2px}
+.liquid-controls{display:grid;grid-template-columns:1fr 1fr;gap:6px;align-items:start}
+.liquid-controls label{font-size:10px;margin:0}.liquid-controls select{font-size:11px;padding:6px 4px}
+.liquid-controls .check{grid-column:1 / -1;min-height:29px}
+.liquid-values{font-size:11px;margin-top:6px;font-variant-numeric:tabular-nums}
+#liquid-note{min-height:58px}#liquid-integration-chart{height:225px}
+.liquid-map-legend{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:10px;margin-top:6px}
+.liquid-map-legend[hidden]{display:none}.liquid-colorbar{height:9px;flex:1;min-width:60px;position:relative;background:linear-gradient(90deg,#0000ff,#ffffff,#ff0000)}
+@media(max-width:850px){.diagnostics{grid-template-columns:1fr}.spectrum-panel{grid-column:1}.spectrum-panel .diagnostic-header{height:auto}}
+:is(#liquid-chart,#liquid-integration-chart) .modebar-container{left:62px!important;right:24px!important;top:20px!important;width:auto!important}
+#liquid-integration-chart .modebar-container{top:34px!important}
+:is(#liquid-chart,#liquid-integration-chart) .modebar{top:0;right:0;max-width:100%;display:flex;flex-wrap:wrap;justify-content:flex-end;white-space:normal}
+:is(#liquid-chart,#liquid-integration-chart) .modebar-group{flex-shrink:0}
+:is(#liquid-chart,#liquid-integration-chart) .modebar-btn{width:24px;min-width:24px;max-width:24px}
+
+.liquid-colorbar>span{position:absolute;left:50%;top:8px;transform:translateX(-50%);font-size:9px;color:#253632}.liquid-map-legend{padding-bottom:8px}
+/* Keep the two LI method toggles together below the dropdowns. */
+.liquid-controls .check{grid-column:auto;min-width:0;line-height:1.3}
+/* Reserve a stable header for three LI toggles and the reported value. */
+.diagnostic-panel:not(.spectrum-panel){grid-template-rows:175px 310px auto}
+@media(max-width:700px){.diagnostic-panel:not(.spectrum-panel){grid-template-rows:195px 310px auto}}
+
+.liquid-colorbar.baseline-turbo{background:linear-gradient(90deg,#30123b,#466be3,#28bceb,#32f298,#a4fc3c,#eecf3a,#fb7e21,#d02f05,#7a0403)}
+
+.map.render-pending img{opacity:.45}.map.render-pending{cursor:progress}
+
+/* Approved µCloud light-surface wordmark; preserve its 300:72 proportions. */
+.dashboard-header{gap:16px;flex-wrap:wrap;padding:22px 28px;background:#faf9f5}.dashboard-brand{display:flex;align-items:center;gap:20px;min-width:0}.dashboard-title{min-width:0}.dashboard-title small{font-size:12px}.header-links{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:10px 12px;min-width:0;max-width:600px}.header-links #status{flex-basis:100%;overflow-wrap:anywhere;text-align:right}.dashboard-header .badge{color:#60776c}.dashboard-link{font-size:12px;color:#356b61;text-decoration:none;border-bottom:1px solid #bdc8bf}.dashboard-link:hover{border-color:#356b61}.dashboard-link:focus-visible{outline:2px solid #356b61;outline-offset:4px;border-radius:2px}.mucloud-wordmark{display:block;width:150px;height:36px;flex-shrink:0}
+@media(max-width:800px){.dashboard-header{display:flex;padding:14px;align-items:flex-start}.dashboard-title h1{font-size:20px}.header-links{justify-content:flex-start;width:100%}.header-links #status{text-align:left}.dashboard-brand{align-items:flex-start;flex-direction:column;gap:8px}.mucloud-wordmark{width:142px;height:auto}.dashboard-header .badge{display:inline-block}}
+
+/* OCI channel controls apply only while the left panel shows OCI RGB. */
+.oci-channels[hidden]{display:none}
+
+/* Scene setup shares the scientific dashboard's typography, panels and palette. */
+[hidden]{display:none!important}
+.setup-layout{grid-template-columns:200px minmax(0,1fr);max-width:1280px;margin:auto;min-height:650px}
+.setup-layout .secondary{background:#fffefa;color:#356b61}
+.setup-layout button[aria-pressed=true]{background:#e7eee8;box-shadow:inset 3px 0 #356b61}
+.setup-navigation{display:grid;gap:8px}.setup-navigation h2{margin-bottom:8px}.setup-navigation button{text-align:left}
+.setup-layout h2{font-size:16px}.setup-layout p{margin:12px 0}.setup-layout .setup-heading{margin-top:20px}
+.setup-tabs,.setup-actions{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin:16px 0}
+.setup-tabs{justify-content:flex-start}.setup-tabs button,.setup-actions button{width:auto}.setup-actions small{max-width:65ch}
+.setup-columns{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(230px,1fr);gap:16px;align-items:start}
+.setup-facts{display:grid;grid-template-columns:1fr auto;gap:10px 14px;font-size:12px}.setup-facts dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
+.setup-path{font-size:12px;overflow-wrap:anywhere}.setup-candidate{margin:12px 0}.setup-candidate>.setup-actions{margin:0}
+.setup-bounds{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.setup-local-row{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;border-bottom:1px solid #bdc8bf;padding-bottom:10px;margin-bottom:10px}
+.setup-layout label.check{font-size:12px}.setup-account{max-width:650px}.setup-layout #setup-error{padding:12px;margin-bottom:12px;background:#f8eee4;border:1px solid #cda98d;border-radius:5px}
+.setup-layout progress{display:block;width:100%;height:14px;accent-color:#356b61;margin:18px 0}
+#setup-account{font-size:12px;color:#60776c}.setup-layout button:disabled{cursor:not-allowed}
+@media(max-width:1000px){.setup-columns{grid-template-columns:1fr}.setup-layout{grid-template-columns:175px minmax(0,1fr)}.setup-bounds{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.setup-layout{display:block;min-height:0}.setup-layout aside{display:block;border:0;padding:0;margin-bottom:20px}.setup-navigation{grid-template-columns:1fr 1fr}.setup-navigation h2{grid-column:1/-1}.setup-local-row{grid-template-columns:1fr;gap:0}.setup-layout input,.setup-layout select{font-size:16px}.setup-layout .setup-actions button{min-height:44px}.setup-facts{grid-template-columns:1fr}.setup-facts dd{text-align:left}}
