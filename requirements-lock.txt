@@ -67,3 +67,7 @@ wrapt==2.4.1
 xarray==2026.7.0
 yarl==1.25.1
 scipy==1.18.1
+
+# Platform-specific transitive dependencies measured on hosted Windows.
+colorama==0.4.6; sys_platform == "win32"
+tzdata==2026.6; sys_platform == "win32"

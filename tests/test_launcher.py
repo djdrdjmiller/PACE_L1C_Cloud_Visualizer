@@ -44,7 +44,9 @@ def test_empty_launch_demo_open_hash_checks_render_and_exports(client,tmp_path):
     result=client.post('/api/export',json={'recipe':recipe,'width_mm':90,'height_mm':90,'dpi':60,'layout':'maps'})
     assert result.status_code==200
     for url in result.json()['artifacts']:assert client.get(url).status_code==200
-    # A changed cached source cannot silently reopen under the saved identity.
+    # Simulate a close/reopen: Windows correctly locks an actively open NetCDF.
+    # A changed cached source still cannot reopen under the saved identity.
+    client.app.state.scene.close()
     with Path(record['paths']['oci']).open('ab') as f:f.write(b'changed')
     client.post('/api/setup/open',json={'scene_id':record['id']})
     assert finish(client)['status']=='failed'
