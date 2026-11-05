@@ -92,7 +92,8 @@ def acquire_clouds(product,directory,budget_mib=256,max_granules=3,local_clouds=
     try:
         entries=[catalog_record(g,'oci_cloud') for g in earthaccess.search_data(short_name='PACE_OCI_L2_CLOUD',version='3.1',temporal=(start,end),count=max_granules+1)]
         m['search']={'collection':'PACE_OCI_L2_CLOUD','version':'3.1','start':start,'end':end,'returned':len(entries)}
-        if not entries or len(entries)>max_granules:raise ValueError('Cloud search missing or exceeds configured granule bound')
+        if not entries:raise ValueError('No matching OCI L2 cloud products found in the supported collection/time window')
+        if len(entries)>max_granules:raise ValueError('OCI cloud candidates exceed the configured granule bound; narrow the acquisition or raise the explicit bound')
         m['candidates']=[{k:v for k,v in e.items() if k!='catalog'} for e in entries];save()
     except Exception as error:
         m['search_failure']=type(error).__name__;save();raise

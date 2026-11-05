@@ -43,9 +43,10 @@ def create_app(scene=None, output="outputs", frontend=None, *, cache=None):
     jobs={}  # Per-browser generations; never require the science lock to cancel.
     output=Path(output).resolve()
     app.state.scene=scene
+    app.state.scene_setup_warnings=[]
     app.state.scene_lock=lock
 
-    def replace_scene(paths):
+    def replace_scene(paths,warnings=()):
         nonlocal scene
         with lock:
             replacement=Scene(paths['oci'],paths['harp2'],paths.get('gpc'),paths.get('mie'),paths.get('atmosphere'))
@@ -54,6 +55,7 @@ def create_app(scene=None, output="outputs", frontend=None, *, cache=None):
             jobs.clear();renders.clear()
             scene=replacement
             app.state.scene=scene
+            app.state.scene_setup_warnings=list(warnings)
             if old is not None:old.close()
 
     from .launcher import install_launcher
@@ -87,6 +89,7 @@ def create_app(scene=None, output="outputs", frontend=None, *, cache=None):
         with lock:
             return {"oci":scene.oci.inventory(),"harp2":scene.harp.inventory(),"alignment":scene.evidence,
                     "correction_capabilities":scene.atmosphere.capabilities if scene.atmosphere else {"rayleigh":False,"transmission":False},
+                    "correction_unavailable_reason":None if scene.atmosphere and scene.atmosphere.capabilities['rayleigh'] else next((w for w in app.state.scene_setup_warnings if w.startswith('Rayleigh/OCI phase unavailable')), 'Rayleigh boundary cache not loaded. Select Prepare experimental Rayleigh / OCI phase in scene setup.'),
                     "liquid_index_available":scene.gpc is not None and 'cloud_liquid_index' in scene.gpc.data,
                     "model_capabilities":{"cloudbow":scene.cloudbow is not None,"rft":scene.cloudbow is not None},
                     "phase_available":scene.atmosphere is not None and scene.atmosphere.phase is not None,"atmosphere":scene.atmosphere.provenance if scene.atmosphere else None,"anchors":scene.anchors(),"default_crop_policy":"bounding original bins of valid HARP2 default RGB footprint",

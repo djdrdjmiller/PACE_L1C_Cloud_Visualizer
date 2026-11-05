@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "Please cite this software and the original NASA products used in your analysis."
 title: "PACE L1C Cloud Visualizer"
 type: software
-version: 0.1.0
+version: 0.1.1
 date-released: '2026-11-05'
 license: Apache-2.0
 repository-code: 'https://github.com/djdrdjmiller/PACE_L1C_Cloud_Visualizer'

@@ -4,22 +4,41 @@ A locally installed µCloud dashboard for NASA PACE OCI and HARP2 observations. 
 
 The code is hosted on GitHub; the Python service and science data run on your own computer. No private phase-function library, transmission table, NASA products or credentials are distributed.
 
-## Install and launch
+## Installation and getting started
 
-Use **Python 3.14**. The release wheel includes the built interface; Node and pnpm are unnecessary for users. Download the wheel from [Releases](https://github.com/djdrdjmiller/PACE_L1C_Cloud_Visualizer/releases), then install it in a virtual environment:
+No GitHub account, repository clone, Node installation or initial granule is needed. Use **Python 3.14**; the release includes the complete browser interface.
 
-```bash
-python3.14 -m venv .venv
-source .venv/bin/activate
-python -m pip install -c https://raw.githubusercontent.com/djdrdjmiller/PACE_L1C_Cloud_Visualizer/v0.1.0/requirements-lock.txt https://github.com/djdrdjmiller/PACE_L1C_Cloud_Visualizer/releases/download/v0.1.0/pace_l1c_vis-0.1.0-py3-none-any.whl
-pace-l1c serve
-```
+1. **Install [Python 3.14.x](https://www.python.org/downloads/)**, then open a terminal in a folder you want to use for the visualizer.
+2. **Create and activate an environment.**
 
-On Windows, create the environment with `py -3.14 -m venv .venv` and activate it using `.venv\Scripts\Activate.ps1` in PowerShell. The rest of the commands are the same. Windows/Linux installation is covered by hosted checks only when those checks have actually run; see [verification status](docs/STATUS.md).
+   macOS / Linux:
 
-The launcher opens [localhost:8000](http://127.0.0.1:8000/). No granule or account is required to launch. Choose **Try a synthetic demo** to explore immediately, **Find a scene** to acquire NASA products, or **Open local files** to select an existing pair. `pace-l1c serve --no-browser --port 8001` changes the port and suppresses automatic browser opening. Keep the process running while using the dashboard; Control-C stops it.
+   ```bash
+   python3.14 -m venv .venv
+   source .venv/bin/activate
+   ```
 
-After reboot, activate the same environment and run `pace-l1c serve` again. Installation and scene download happen once. Use **Saved scenes** to reopen cached files offline. The default per-user cache is independent of the installation directory; set `PACE_L1C_CACHE` or `serve --cache-dir PATH` to choose another location.
+   Windows PowerShell:
+
+   ```powershell
+   py -3.14 -m venv .venv
+   .\.venv\Scripts\Activate.ps1
+   ```
+
+3. **Install the release and launch.** Run these commands in the activated environment:
+
+   ```bash
+   python -m pip install -c https://raw.githubusercontent.com/djdrdjmiller/PACE_L1C_Cloud_Visualizer/v0.1.1/requirements-lock.txt https://github.com/djdrdjmiller/PACE_L1C_Cloud_Visualizer/releases/download/v0.1.1/pace_l1c_vis-0.1.1-py3-none-any.whl
+   pace-l1c serve
+   ```
+
+   The dashboard opens at [localhost:8000](http://127.0.0.1:8000/). Keep the terminal open; Control-C stops the server. If the port is occupied, use `pace-l1c serve --port 8001`.
+
+4. **Connect Earthdata to download NASA files.** Create a free [NASA Earthdata Login](https://urs.earthdata.nasa.gov/users/new) if you do not already have one. In the dashboard, choose **Earthdata sign-in** and enter those credentials, or choose **Use existing local Earthdata setup**. There is no separate earthaccess account. **Remember on this computer** is optional and saves credentials in an unencrypted local netrc file. Searching, the synthetic demo and already downloaded scenes need no login.
+5. **Choose a scene.** Select **Find a scene**, enter a complete OCI/HARP2 filename or search by UTC date and region, then review the candidate and transfer ceiling. For a first example, use `PACE_OCI.20251002T182635.L1C.V3.5km.nc`. GPC adds reported LI/cloud properties; **Prepare experimental Rayleigh / OCI phase** additionally acquires separate OCI cloud and MERRA-2 pressure inputs. Missing optional products do not prevent opening a verified OCI/HARP2 core. Download, wait for validation, then select **Open dashboard**. New scenes start with **Beauty · quicklook** display enhancement; observations remain TOA unless a supported map correction is selected.
+6. **Return later.** Activate the same environment, run `pace-l1c serve`, and choose **Saved scenes**. No reinstallation or repeat download is needed. **Choose scene** returns from the viewer to setup; incomplete acquisitions have revalidate/retry controls.
+
+The per-user data cache is separate from the installation folder. Set `PACE_L1C_CACHE` or use `serve --cache-dir PATH` to choose its location. See [Releases](https://github.com/djdrdjmiller/PACE_L1C_Cloud_Visualizer/releases) and [verification status](docs/STATUS.md) for tested versions. Choose **Try a synthetic demo** to explore before signing in or downloading real data.
 
 ## Scene discovery and Earthdata
 
@@ -92,3 +111,9 @@ python -m pip wheel --no-deps . --wheel-dir dist
 CI uses independent synthetic science/catalog/transfer fixtures without real NASA credentials or private data, builds the frontend and wheel, and smoke-tests installation outside the checkout. Passing CI creates the first GitHub release for a new package version; existing version assets are never overwritten. See [CONTRIBUTING](CONTRIBUTING.md), [AGENTS](AGENTS.md) and [current evidence and gaps](docs/STATUS.md). Real dateline/high-latitude acceptance remains deferred; catalog discovery is not real-scene validation.
 
 Apache 2.0 applies to this project's code. NASA products, private libraries and dependencies retain their own terms. See [LICENSE](LICENSE), [NOTICE](NOTICE), [third-party notices](THIRD_PARTY.md) and [citation metadata](CITATION.cff).
+
+## Try the fixed-scene web demo
+
+[Open the original-scene showcase](https://djdrdjmiller.github.io/PACE_L1C_Cloud_Visualizer/) in your browser; no installation or Earthdata login is required. It uses the 2 October 2025 scene, twelve numbered original bins selectable on all three linked maps, three HARP2 sector presets, and TOA/experimental Rayleigh map choices. Selecting a marker updates its OCI spectrum, discrete hyperangular observations and narrow liquid-index diagnostics. Map corrections do not alter those TOA observations.
+
+The demo is a finite set of precomputed maps and selected-bin observations. Use the installed dashboard for new scenes, arbitrary-bin inspection, unrestricted rendering and exports. The private phase library and its cloudbow/RFT model curves are excluded. Source identities, map recipes, missing support and asset hashes accompany the demo. Rebuilding requires locally authorized original products; `scripts/build_showcase.py` exports only bounded derived assets. The manually dispatched Pages workflow verifies the declared release archive before deployment.

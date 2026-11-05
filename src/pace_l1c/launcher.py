@@ -113,7 +113,7 @@ def install_launcher(app, replace_scene, current_scene, *, cache=None):
             if sha256(path) != record['hashes'][role]:
                 raise ValueError('Saved source has changed: ' + role + '. Import/validate it as a new scene.')
         check_cancelled()
-        replace_scene(record['paths'])
+        replace_scene(record['paths'],record.get('warnings',[]))
         return {'scene': record}
 
     def _ancillary(paths, budget_mib):

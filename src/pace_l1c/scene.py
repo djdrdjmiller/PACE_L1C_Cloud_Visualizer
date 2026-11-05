@@ -356,7 +356,10 @@ class Scene:
         return sorted(c["angle"] for c in self.harp.channels if c["wavelength"] == wave)
 
     def default_recipe(self):
-        recipe=Recipe()
+        # Startup display policy only; explicit Recipe/from_dict replay is unchanged.
+        recipe=Recipe(preset="beauty")
+        recipe.stretch["total"]=[0.,.8,1.6]
+        recipe.stretch["polarized"]=[0.,.12,1.4]
         recipe.anchor_angle=min(self.anchors(),key=abs)
         h=self.layers(recipe)[1]
         valid=np.isfinite(h).all(axis=-1)

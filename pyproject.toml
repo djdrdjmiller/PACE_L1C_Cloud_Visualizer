@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pace-l1c-vis"
-version = "0.1.0"
+version = "0.1.1"
 description = "Native-bin PACE OCI and HARP2 analysis desk"
 requires-python = ">=3.14,<3.15"
 license = "Apache-2.0"
