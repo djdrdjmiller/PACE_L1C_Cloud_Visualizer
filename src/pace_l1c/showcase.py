@@ -19,16 +19,45 @@ from . import __version__
 DEFAULT_POINTS=[(60,300),(100,200),(120,380),(175,250),(190,370),(225,170),(254,261),(260,303),(280,385),(320,220),(335,340),(365,280)]
 
 
+def display_recipe(recipe):
+    return {key:value for key,value in asdict(recipe).items() if not key.startswith('rft')}
+
+
 def _write_json(path,value):
     path.write_text(json.dumps(jsonable(value),allow_nan=False,separators=(',',':')),encoding='utf-8')
 
 
-def build_showcase(scene,output,*,points=DEFAULT_POINTS,anchors=None,frontend='frontend/dist'):
+def copy_frontend(frontend,output):
+    """Copy the static entry's declared chunks, excluding the installed app UI."""
+    frontend,output=Path(frontend),Path(output)
+    html=(frontend/'showcase.html').read_text()
+    (output/'index.html').write_text(html)
+    (output/'assets').mkdir()
+    # Vite's static entry declares its imports as scripts/modulepreloads/styles.
+    for reference in set(re.findall(r'''(?:src|href)=["'](\./assets/[^"']+)["']''',html)):
+        path=Path(reference.removeprefix('./'))
+        if '..' in path.parts:raise ValueError('Invalid frontend asset path')
+        shutil.copyfile(frontend/path,output/path)
+    shutil.copytree(frontend/'branding',output/'branding')
+
+
+def cached_cloudbow(diagnostics):
+    """Public display outputs only: never export phase arrays, optics or a LUT."""
+    def keep(record,keys):return {k:record[k] for k in keys if k in record}
+    cloud=keep(diagnostics['cloudbow'],('status','reason','quality','theta','signed_q','radius_um','variance'))
+    residual=keep(diagnostics['residuals'],('branch','theta','observed_signed_q','sample_count','source_views','angular_interval'))
+    residual['policy']='Original TOA branch 1; stored cloudbow minus observed in displayed −Q'
+    residual['series']={'cloudbow':keep(diagnostics['residuals']['series']['cloudbow'],('status','reason','predicted_signed_q','residual_signed_q','rmse','model'))}
+    return {'cloudbow':cloud,'residuals':residual}
+
+
+def build_showcase(scene,output,*,points=DEFAULT_POINTS,anchors=None,frontend='frontend/dist',include_cloudbow_curves=False,include_left_maps=False):
     """All plotted science comes from the current shared library, not a new model."""
     output=Path(output)
     if output.exists():raise ValueError('Choose a new output directory; existing artifacts/data are never cleaned automatically')
     if not (Path(frontend)/'showcase.html').is_file():raise ValueError('Build the frontend/showcase entry first')
-    if scene.cloudbow:raise ValueError('Static export must use the GPC-only scene, without a private Mie library')
+    if scene.cloudbow and not include_cloudbow_curves:raise ValueError('Exporting derived curves from a private Mie library requires explicit include_cloudbow_curves')
+    if include_cloudbow_curves and not scene.cloudbow:raise ValueError('Cached cloudbow curves require an authorized local library')
     recipe=scene.default_recipe()
     recipe.projection='plate_carree';recipe.scattering_contours=True
     if anchors is None:
@@ -48,12 +77,12 @@ def build_showcase(scene,output,*,points=DEFAULT_POINTS,anchors=None,frontend='f
         examples.append({'id':f'{r}-{c}','number':index,'row':r,'col':c,'latitude':float(scene.oci.lat[r,c]),'longitude':float(scene.oci.lon[r,c]),
                          'position':[float(x/width),float(y/height)],'diagnostics':f'data/bin-{r}-{c}.json'})
     output.mkdir(parents=True);(output/'data').mkdir();(output/'maps').mkdir()
-    shutil.copyfile(Path(frontend)/'showcase.html',output/'index.html')
-    shutil.copytree(Path(frontend)/'assets',output/'assets')
-    shutil.copytree(Path(frontend)/'branding',output/'branding')
+    copy_frontend(frontend,output)
     for item in examples:
-        d=scene.diagnostics([item['row'],item['col']])
+        d=scene.diagnostics([item['row'],item['col']],rft=False)
         public={key:d[key] for key in ('selected','latitude','longitude','oci','harp2','cloud','liquid_index','atmosphere')}
+        public['cloud']={**public['cloud'],'fields':{k:v for k,v in public['cloud'].get('fields',{}).items() if not k.startswith('cloud_rft')}}
+        if include_cloudbow_curves:public.update(cached_cloudbow(d))
         _write_json(output/item['diagnostics'],public)
     scenarios=[]
     corrections=['toa','rayleigh'] if scene.atmosphere and scene.atmosphere.capabilities['rayleigh'] else ['toa']
@@ -71,18 +100,37 @@ def build_showcase(scene,output,*,points=DEFAULT_POINTS,anchors=None,frontend='f
             scenarios.append({'id':f'{n}-{correction}','anchor':angle,'correction':correction,'images':paths,
                               'channels':{'oci':p['oci_channels'],'harp2':p['harp_channels']},
                               'support':{e['id']:[bool(np.isfinite(a[e['row'],e['col']]).all()) for a in fields] for e in examples},
-                              'recipe':asdict(choice),'coverage':p.get('correction_coverage'),'rayleigh_land_policy':p['rayleigh_land_policy']})
+                              'recipe':display_recipe(choice),'coverage':p.get('correction_coverage'),'rayleigh_land_policy':p['rayleigh_land_policy']})
     default_anchor=min(anchors,key=abs)
+    left_maps=[]
+    if include_left_maps:
+        choices=[]
+        if scene.atmosphere and scene.atmosphere.phase is not None:choices.append(('oci_phase','signed_q','OCI cloud phase'))
+        if scene.gpc and 'cloud_liquid_index' in scene.gpc.data:choices.append(('liquid_index','signed_q','GPC liquid index'))
+        choices += [(f'liquid_index_{method}',quantity,f'Calculated LI · {method}') for method in ('discrete','trapezoidal') for quantity in ('signed_q','polarized')]
+        for mode,quantity,label in choices:
+            print(f'Preparing static left map: {mode}, {quantity}',flush=True)
+            choice=replace(recipe,left_mode=mode,liquid_index_quantity=quantity,anchor_angle=default_anchor)
+            result,_=preview(scene,choice,width,height)
+            path=f'maps/left-{mode}-{quantity}.png'
+            (output/path).write_bytes(base64.b64decode(result['layers'][0].split(',',1)[1]))
+            field=scene.layers(choice)[0]
+            left_maps.append({'mode':mode,'quantity':quantity,'label':label,'image':path,'recipe':display_recipe(choice),
+                              'scale':result['provenance'].get('liquid_index_scale'),
+                              'support':{e['id']:bool(np.isfinite(field[e['row'],e['col']]).all()) for e in examples}})
     identities={'oci':scene.oci.identity,'harp2':scene.harp.identity,'gpc':scene.gpc.provenance['gpc'] if scene.gpc else None}
     manifest={'schema_version':1,'software_version':__version__,'scene_time':scene.oci.attrs['time_coverage_start'],
               'title':'Original PACE scene · 2 October 2025','shape':scene.shape,'alignment':scene.evidence,'inputs':identities,
               'aspect_ratio':result['aspect_ratio'],'image_size':[width,height],'crop':recipe.crop,'projection':recipe.projection,
-              'examples':examples,'scenarios':scenarios,'anchors':anchors,'default_anchor':default_anchor,
-              'default_correction':'rayleigh' if 'rayleigh' in corrections else 'toa','display_recipe':asdict(replace(recipe,anchor_angle=default_anchor,correction='rayleigh' if 'rayleigh' in corrections else 'toa',polar_rayleigh='rayleigh' in corrections)),
-              'phase_library':'Not included; no Mie data or Mie-derived cloudbow/RFT curves are distributed',
+              'examples':examples,'scenarios':scenarios,'left_maps':left_maps,'anchors':anchors,'default_anchor':default_anchor,
+              'default_correction':'rayleigh' if 'rayleigh' in corrections else 'toa','display_recipe':display_recipe(replace(recipe,anchor_angle=default_anchor,correction='rayleigh' if 'rayleigh' in corrections else 'toa',polar_rayleigh='rayleigh' in corrections)),
+              'phase_library':'LUT not included; only selected-bin derived cloudbow display curves are published' if include_cloudbow_curves else 'Not included; no Mie data or derived curves are distributed',
+              'model_preview':{'enabled':include_cloudbow_curves,'scope':'Fixed marked bins only; cached cloudbow local-library preview; no public phase-library service',
+                               'provenance':scene.cloudbow.provenance if include_cloudbow_curves else None,
+                               'policy':'Original same-bin cloudbow C/B/A; no refit or phase/peak rescaling'},
               'scope':{'selection':'Only the declared marked original bins','diagnostics':'Original TOA samples; branch 1 LI',
                        'maps':'Pre-rendered original-bin OCI and shared-source HARP2 images; supported classified land+water Rayleigh, unclassified TOA, unsupported classified missing',
-                       'not_included':['New scene discovery','Arbitrary-bin inspection','Unrestricted rendering/exports','Cloudbow/RFT model overlays']}}
+                       'not_included':['New scene discovery','Arbitrary-bin inspection','Unrestricted rendering/exports','Phase library or remote phase queries']}}
     _write_json(output/'data/manifest.json',manifest)
     (output/'.nojekyll').write_text('')
     for name in ('LICENSE','NOTICE','THIRD_PARTY.md'):

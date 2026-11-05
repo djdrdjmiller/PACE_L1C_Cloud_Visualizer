@@ -1,1 +1,15 @@
-.showcase-map{cursor:default}.showcase-map img{height:100%;object-fit:fill;display:block}.example-marker{position:absolute;transform:translate(-50%,-50%);width:25px;height:25px;padding:0;border-radius:50%;border:2px solid white;background:#244c47;color:white;font-size:11px;font-weight:700;line-height:21px;box-shadow:0 1px 4px #0009;z-index:1}.example-marker.active{background:#b13d35;outline:2px solid #fff;outline-offset:2px;z-index:2}.example-marker:focus-visible{outline:3px solid #f3c55b;outline-offset:3px}.showcase-main aside p{font-size:12px;margin:0}.showcase-main .spectrum-panel{display:block}.showcase-main .quiet{font-size:11px}.showcase-main .map{overflow:visible}.showcase-main .selection{min-height:48px}
+.showcase-map{cursor:default}.showcase-map img{height:100%;object-fit:fill;display:block}
+.example-marker,.selected-ring{position:absolute;transform:translate(-50%,-50%);width:18.75px;height:18.75px;border-radius:50%;z-index:1}
+.example-marker{padding:0;border:1.5px solid white;background:#244c47;color:white;font-size:8.25px;font-weight:700;line-height:15.75px;box-shadow:0 1px 3px #0009}
+.example-marker::after{content:'';position:absolute;inset:-5px;border-radius:50%}
+.example-marker.active{background:#b13d35;outline:1.5px solid #fff;outline-offset:1.5px;z-index:2}
+.example-marker:focus-visible{outline:3px solid #f3c55b;outline-offset:3px}
+.selected-ring{border:2px solid #b13d35;outline:1.5px solid white;outline-offset:0;background:transparent;box-shadow:0 1px 3px #0009;pointer-events:none;z-index:2}
+.showcase-main aside p{font-size:12px;margin:0}.showcase-main .spectrum-panel{display:block}.showcase-main .quiet{font-size:11px}.showcase-main .map{overflow:visible}.showcase-main .selection{min-height:48px}
+.showcase-main .showcase-tools{min-height:185px}.showcase-tools h2{margin-bottom:8px}.showcase-tools .overlay-controls{margin-top:8px;gap:6px}.showcase-tools .overlay-controls legend{margin-bottom:0}.showcase-tools .overlay-controls .check{font-size:10px}
+.showcase-diagnostic>.chart{height:390px}.showcase-main .support-note{min-height:44px;margin:8px 0}.showcase-main #diagnostics[aria-busy=true]{opacity:.45}
+.showcase-main #cloud-fields{grid-template-columns:repeat(3,minmax(0,1fr));gap:0 18px}.showcase-main #cloud-fields p{font-size:12px;margin:6px 0}
+@media(max-width:850px){.showcase-main .showcase-tools{min-height:0;margin-bottom:16px}}
+@media(max-width:540px){.showcase-main #cloud-fields{grid-template-columns:1fr 1fr}.showcase-diagnostic>.chart{height:430px}}
+
+.showcase-main #residual-chart{height:250px}
