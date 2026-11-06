@@ -2,6 +2,8 @@
 
 A locally installed µCloud dashboard for NASA PACE OCI and HARP2 observations. Search for a scene, download a verified OCI/HARP2 L1C pair, then explore linked maps, spectra, polarimetry and liquid-index diagnostics from original source bins. Export reproducible PNG/PDF figures and JSON recipes.
 
+**[Try the live browser demo](https://djdrdjmiller.github.io/PACE_L1C_Cloud_Visualizer/)** to explore linked maps, spectra, liquid-index diagnostics and cloudbow curves for the original scene. No installation or Earthdata login is required. See [demo details and limits](#try-the-fixed-scene-web-demo).
+
 The code is hosted on GitHub; the Python service and science data run on your own computer. No private phase-function library, transmission table, NASA products or credentials are distributed.
 
 ## Installation and getting started
