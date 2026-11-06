@@ -6,7 +6,7 @@ A locally installed µCloud dashboard for NASA PACE OCI and HARP2 observations. 
 
 [![PACE L1C visualizer title, sidebar controls, OCI imagery, HARP2 visible RGB and polarimetry with scattering-angle contours](docs/images/visualizer-maps.png)](https://djdrdjmiller.github.io/PACE_L1C_Cloud_Visualizer/)
 
-*L1C Granule from October 2nd, 2025. By default the maps show OCI (left), HARP2 visible RGB (middle), and HARP2 polarized reflectance (right), including HARP2 scattering-angle contours. Beauty enhancement and experimental Rayleigh map correction are enabled. Click the image to explore the demo.*
+*L1C Granule from October 2nd, 2025. By default the maps show OCI (left), HARP2 visible RGB (middle), and HARP2 polarized reflectance (right), including HARP2 scattering-angle contours. Beauty enhancement and experimental Rayleigh correction are enabled. Click the image to explore the demo.*
 
 ## Installation and getting started
 
