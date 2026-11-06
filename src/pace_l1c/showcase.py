@@ -61,8 +61,8 @@ def build_showcase(scene,output,*,points=DEFAULT_POINTS,anchors=None,frontend='f
     recipe=scene.default_recipe()
     recipe.projection='plate_carree';recipe.scattering_contours=True
     if anchors is None:
-        anchors=list(dict.fromkeys(min(scene.anchors(),key=lambda a:abs(a-target)) for target in (-30,0,30)))
-    if len(anchors)>5 or not anchors:raise ValueError('Choose one to five existing sparse-band anchors')
+        anchors=scene.anchors()
+    if not anchors or len(anchors)>60 or len(set(anchors))!=len(anchors):raise ValueError('Choose one to sixty unique existing sparse-band anchors')
     if any(a not in scene.anchors() for a in anchors):raise ValueError('Showcase sectors must be actual metadata-derived anchors')
     if not 1<=len(points)<=20:raise ValueError('Choose one to twenty marked original bins')
     points=[tuple(map(int,p)) for p in points]

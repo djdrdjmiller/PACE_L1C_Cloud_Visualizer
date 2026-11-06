@@ -16,12 +16,13 @@ def test_finite_original_bin_export(tmp_path):
     try:
         expected=scene.diagnostics([5,6])
         out=tmp_path/'site'
-        result=build_showcase(scene,out,points=[(5,6),(8,12)],anchors=[scene.anchors()[0]],frontend=frontend,include_left_maps=True)
-        assert result['examples']==2 and result['scenarios']==1
+        result=build_showcase(scene,out,points=[(5,6),(8,12)],frontend=frontend,include_left_maps=True)
+        assert result['examples']==2 and result['scenarios']==len(scene.anchors())
         assert (out/'assets/showcase-test.js').is_file()
         assert not (out/'assets/dashboard-test.js').exists()
         manifest=json.loads((out/'data/manifest.json').read_text())
         assert manifest['examples'][0]['id']=='5-6'
+        assert manifest['anchors']==scene.anchors()
         d=json.loads((out/'data/bin-5-6.json').read_text())
         assert d['oci']==expected['oci'] and d['harp2']==expected['harp2']
         assert d['liquid_index']==expected['liquid_index']

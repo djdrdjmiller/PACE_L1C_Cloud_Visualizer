@@ -1,13 +1,14 @@
 {
   "tag": "v0.1.1",
-  "asset": "pace-fixed-scene-showcase-v3.zip",
-  "bytes": 11815672,
-  "sha256": "074ca65ebc752ad988bd8f552cb9155875a15ecafb9cf19d002f98afd063509f",
+  "asset": "pace-fixed-scene-showcase-v4.zip",
+  "bytes": 32561683,
+  "sha256": "b1b8fe03dcdc17e93740b15dbf023de597c694529cfc8f9bfdc5f2efddaf04a0",
   "scene": "20251002T182635",
   "examples": 12,
-  "presets": 6,
+  "presets": 20,
   "additional_left_maps": 6,
   "phase_library_included": false,
   "cached_cloudbow_display_curves": true,
-  "demo_revision": 3
+  "demo_revision": 4,
+  "shared_nominal_angle_anchors": 10
 }
