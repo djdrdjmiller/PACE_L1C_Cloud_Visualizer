@@ -4,6 +4,10 @@ A locally installed µCloud dashboard for NASA PACE OCI and HARP2 observations. 
 
 **[Try the live browser demo](https://djdrdjmiller.github.io/PACE_L1C_Cloud_Visualizer/)** to explore linked maps, spectra, liquid-index diagnostics and cloudbow curves for the original scene. No installation or Earthdata login is required. See [demo details and limits](#try-the-fixed-scene-web-demo).
 
+[![PACE L1C visualizer title, sidebar controls, OCI imagery, HARP2 visible RGB and polarimetry with scattering-angle contours](docs/images/visualizer-maps.png)](https://djdrdjmiller.github.io/PACE_L1C_Cloud_Visualizer/)
+
+*Original 2 October 2025 scene with the dashboard title and sidebar selectors. The maps show OCI (left), HARP2 visible RGB (middle), and HARP2 polarized reflectance (right), including HARP2 scattering-angle contours. Beauty enhancement and experimental Rayleigh map correction are enabled. Click the image to explore the demo.*
+
 The code is hosted on GitHub; the Python service and science data run on your own computer. No private phase-function library, transmission table, NASA products or credentials are distributed.
 
 ## Installation and getting started
